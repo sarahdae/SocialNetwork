@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Welcome to Social Network Extractor!</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="networks.css"/>
+    </head>
+    <body>
+        <div class="contents">
+            
+                <h1>Welcome to Social Network Extractor!</h1>
+                <p class="teaser">This tool annotates named entities and places in a book,
+                    <br> and extracts and visualizes character networks as they develop over the course of the book.
+                    <br> Select the book you want to work with:</p>
+
+                <!-- <div class="container">
+                 
+                     <div> <input id="lord" type="radio" name="book" value="lord"/><label for="lord">Lord of the Flies</label></div>
+                     <div><input id="treasure" type="radio" name="book" value="treasure"/><label for="treasure">Treasure Island</label></div>
+                 
+                 </div> -->
+                <div class="section group" style="text-align: center">
+                    <div class="col span_1_of_3" style="text-align: center" onclick="window.location.href = './Visualisation_LordOfTheFlies.html'">
+                        <img src="LotF.jpg" alt="Lord of the Flies" style="width:287px;height:392px;" ><br>
+                        <!--<input id="lord" type="radio" name="book" value="lord"/><label for="lord">Lord of the Flies</label> -->
+                        <button class="button" onclick="window.location.href = './Visualisation_LordOfTheFlies.html'">Continue to Lord of the Flies</button>
+                    </div>
+                    <div class="col span_2_of_3" style="text-align: center" onclick="window.location.href = './Visualisation_TreasureIsland.html'">
+                        <img src="treasureIsland.jpg" alt="Treasure Island" style="width:287px;height:392px;"><br>
+                        <!--<input id="treasure" type="radio" name="book" value="treasure"/><label for="treasure">Treasure Island</label>-->
+                        <button class="button" onclick="window.location.href = './Visualisation_TreasureIsland.html'">Continue to Treasure Island</button>
+                    </div>
+                    
+                </div>
+                <!--<p>Do you want to be asked for corrections during processing? This will improve the outcome. If you choose "no" here,<br/>
+                    the tool will try its best, but the results will not be as good.</p>
+                <p><input id="yes" type="radio" name="check" value="yes"/><label for="yes">Yes</label>
+                    <input id="no" type="radio" name="check" value="no"/><label for="no">No</label></p>
+                <button onclick="getInput" type='button'>Submit</button> -->
+                
+           
+            
+            <p> <br><br><br><br><br><br></p>
+        </div>
+        <script>
+            function getInput() {
+                //var titleField = document.getElementById('t').value;
+                //var authorField = document.getElementById('a').value;
+                if (document.getElementById('lord').checked) {
+                    var bookField = document.getElementById('lord').value;
+                } else if (document.getElementById('treasure').checked) {
+                    var bookField = document.getElementById('treasure').value;
+                }
+            //    if (document.getElementById('yes').checked) {
+            //        var bookField = document.getElementById('yes').value;
+            //    } else if (document.getElementById('no').checked) {
+            //       var bookField = document.getElementById('no').value;
+            //    }
+            }
+
+            // <p>Before we start annotating, please fill in the title and author of the book, 
+            //       and choose the book you want to work with. </p>
+            // <p>Book Title: <input id="t" title="title" name="title" size="30" type="text" />&nbsp;
+            //<p>Author: <input id="a" title="author" name="author" size="30" type="text" />
+        </script>
+        <hr> 
+        <footer>
+            <p>This page is presented bei Anke Rüb, Sarah Dänel and An khuong Bui. </p>
+            <!--<a title="google it!" href="http://www.google.de">Google it!</a> -->
+        </footer>
+    </body>
+</html>

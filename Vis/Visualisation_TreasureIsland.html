@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Visualisation Treasure Island</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="networks.css"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+    </head>
+    <body>
+        <!--Button to go back to the main page-->
+        <button class="standard-button" onclick="window.location.href = './welcome.html'">Back</button><br><br>
+
+        <!-- Vertical slider -->
+        <script>
+            $(function () {
+                $("#slider-vertical").slider({
+                    orientation: "vertical",
+                    range: "min",
+                    min: 0,
+                    max: 34,
+                    value: 1,
+                    slide: function (event, ui) {
+                        $("#amount").val(ui.value);
+                    }
+                });
+                $("#amount").val($("#slider-vertical").slider("value"));
+                var selection = $(".slider-vertical").slider("value");
+            });
+            var chap;
+            if (selection === 1) {
+                chap = "Chapter1.txt";
+            } else if (selection === 2) {
+                chap = "Chapter2.txt";
+            } else {
+                chap = "else";
+            }
+
+        </script>
+
+        <!-- Label of the slider -->
+        <p>
+            <label for="amount">Chapter:</label>
+            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 25px; text-align: center;">
+        </p>
+        <div id="slider-vertical" style="height:400px;"></div>
+        <p>
+
+        </p>
+
+
+        <!--Depending on the chosen value on the slider, another json file is used
+        or only one file which is filtered after the chapter No.??-->
+
+
+    </body>
+</html>

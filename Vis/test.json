@@ -1,0 +1,15 @@
+{
+"nodes":[
+{"name":"Ralph", "group":1, "size": 1657},
+{"name":"Sam", "group":1, "size": 743},
+{"name":"Eric", "group":1, "size": 907},
+{"name":"Piggy", "group":2, "size": 5400},
+{"name":"bb", "group":2, "size": 5400}
+],
+"links":[
+{"source":1, "target":0, "value":1, "length": 50},
+{"source":1, "target":2, "value":1, "length": 100},
+{"source":1, "target":3, "value":1, "length": 100},
+{"source":2, "target":0, "value":1, "length": 300}
+]
+}
