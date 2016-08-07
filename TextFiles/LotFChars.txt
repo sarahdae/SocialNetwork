@@ -1,0 +1,30 @@
+Ralph,fair boy
+Jack,Merridew
+Simon
+Piggy,fat boy
+Roger
+Sam,Sameric
+Eric,Sameric
+Percival,Wemys,Madison
+Mulberry,Birthmark Boy
+The Lord of the flies,Sow,beast,beastie
+Walter
+Stanley
+Wilfred
+Bill
+Robert
+Maurice
+Harold
+Phil
+Johnny
+Henry
+Parachutist
+naval,officer
+grown-ups
+Auntie
+
+hunters,savage
+choir,choirboy
+biggun
+littlun,smaller boys
+  
