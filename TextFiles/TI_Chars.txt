@@ -1,0 +1,26 @@
+Long John Silver,Silver,cook,quartermaster,Long John,sea-cook,John Silver
+Jim Hawkins,Jim,Mr. Hawkins
+Captain Flint,Flint,John Flint
+Billy Bones,Billy,William „Billy“ Bones, Bill 
+Dr. Livesey,Livesey,the doctor,Doctor Livesey 
+Ben Gunn,Ben,Benjamin Gunn,Benjamin 
+Squire Trelawney,Trelawney,squire 
+Captain Alexander Smollet,captain,Smollet
+Abraham Gray,carpenter,Gray
+Job Anderson,boatswain,Anderson 
+Israel Hands,coxswain,Israel,Mr. Hands,Hands 
+Black Dog
+Pew,blind man,blind beggar 
+Tom Redruth,Tom  
+John
+Mr. Dance,Supervisor
+Dogger
+John Hunter
+Dick Johnson,Dick 
+Richard Joyce
+George Merry,George, 
+Tom Morgan,Tom,Morgan 
+O’Brien
+Alan
+Allardyce
+Mr. Arrow
