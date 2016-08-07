@@ -12,17 +12,17 @@ public class CheckChars {
 	 * die nicht in
 	 * der Charakterliste vorkommen.
 	 */
-	ArrayList<String[]> characters = new ArrayList();
+	ArrayList<String[]> characters = new ArrayList<>();
 	
 	public CheckChars(Filter nnpList, String charListFile) {
 			characters = this.check(nnpList, charListFile);
 		}
 	
-	private ArrayList check(Filter nnpList, String charListFile) {
+	private ArrayList<String[]> check(Filter nnpList, String charListFile) {
 		try {
 			BufferedReader read = new BufferedReader(new FileReader(new File(charListFile)));
 			String line;
-			ArrayList nnps = nnpList.getNNPS();
+			ArrayList<?> nnps = nnpList.getNNPS();
 			
 			for(int i = 0; i < nnps.size(); i++)//go through list of filtered nnps
 			{
@@ -46,6 +46,7 @@ public class CheckChars {
 					}
 				}
 			}
+			read.close();
 		} catch (IOException e) {
 			System.out.println("File not found CheckChars.");
 		}
@@ -53,12 +54,24 @@ public class CheckChars {
 		return characters;
 	}
 		
-	public ArrayList getCheckedCharacters() {
+	public ArrayList<String[]> getCheckedCharacters() {
 		return characters;
 	}
 
 	public static void main(String[] args) {
-		
+		Filter test = new Filter("C:\\Users\\Sarah Dänel\\Documents\\NetBeansProjects\\JavaApplication3\\src\\TI_Annotated.txt");
+		CheckChars chars = new CheckChars(test, "C:\\Users\\Sarah Dänel\\Documents\\NetBeansProjects\\JavaApplication3\\src\\TI_Chars.txt");
+		ArrayList<String[]> list = chars.getCheckedCharacters();
+		for(int i = 0; i < list.size(); i++)
+		{
+			String[] nnp = list.get(i);
+			for(int j = 0; j < nnp.length; j++)
+			{
+				System.out.print(nnp[j]);
+			}
+			System.out.println();
+		}
+		 
 	}
 	
 }
