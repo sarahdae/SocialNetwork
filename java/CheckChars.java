@@ -20,12 +20,12 @@ public class CheckChars {
 	
 	private ArrayList<String[]> check(Filter nnpList, String charListFile) {
 		try {
-			BufferedReader read = new BufferedReader(new FileReader(new File(charListFile)));
-			String line;
 			ArrayList<?> nnps = nnpList.getNNPS();
 			
 			for(int i = 0; i < nnps.size(); i++)//go through list of filtered nnps
 			{
+				BufferedReader read = new BufferedReader(new FileReader(new File(charListFile)));
+				String line;
 				String[] nnpParts = (String[]) nnps.get(i);//lemma from filtered nnps
 				String lemma = nnpParts[2];
 				
@@ -35,7 +35,7 @@ public class CheckChars {
 					
 					for(String nickname : splitline)
 					{
-						if(nickname.equals(lemma))//is the lemma of this nnp one of the nicknames in that line? 
+						if(nickname.equalsIgnoreCase(lemma))//is the lemma of this nnp one of the nicknames in that line? 
 						{
 						     if(!characters.contains(nnps.get(i)))
 						     {
@@ -45,8 +45,8 @@ public class CheckChars {
 						}
 					}
 				}
+				read.close();
 			}
-			read.close();
 		} catch (IOException e) {
 			System.out.println("File not found CheckChars.");
 		}
