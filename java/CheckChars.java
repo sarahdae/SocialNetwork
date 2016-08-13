@@ -35,7 +35,7 @@ public class CheckChars {
 					
 					for(String nickname : splitline)
 					{
-						if(nickname.equals(lemma))//is the lemma of this nnp one of the nicknames in that line? 
+						if(nickname.equalsIgnoreCase(lemma))//is the lemma of this nnp one of the nicknames in that line? 
 						{
 						     if(!characters.contains(nnps.get(i)))
 						     {
