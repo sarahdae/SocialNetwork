@@ -10,49 +10,62 @@ import java.util.*;
 
 public class CountOccur {
 
-    ArrayList<String> allChars = new ArrayList();
     HashMap<String, Integer> counter = new HashMap<String, Integer>();
 
-    public CountOccur() {
-        //stub
+    public CountOccur(Filter nnpList) {
+        counter = this.counting(nnpList);
     }
 
-    public CountOccur(Filter nnpList, CheckChars entities) {
+    private HashMap<String, Integer> counting(Filter nnpList) {
         try {
-
             String lemma = "";
+            String chapterID = "";
+            int count = 0;
+            int currentChap = 1;
             ArrayList nnps = nnpList.getNNPS();
-            ArrayList realCharList = entities.getCheckedCharacters();
-            //System.out.println("chapID\tlemma");
+            List<String> chapID = new ArrayList();
+            List<String> lemmaList = new ArrayList();
+
             for (int i = 0; i < nnps.size(); i++)//go through list of filtered nnps
             {
-                String[] nnpParts = (String[]) nnps.get(i);//lemma from filtered nnps
-                String chapterID = nnpParts[0]; //chapterID
-                lemma = nnpParts[2];
-                //System.out.println(chapterID + " " + lemma);
-                //while reading each line --> +1 whenever same name occurs
-                //http://stackoverflow.com/questions/4820716/finding-repeated-words-on-a-string-and-counting-the-repetitions
-                counter.put(lemma, 0); // put all lemmas as keys with value initial 0
-            }
-            for (Map.Entry<String, Integer> entry : counter.entrySet()) { //go through entities
-
-                    Integer oldCount = counter.get(entry);
-                    if (oldCount == null) {
-                        oldCount = 0;
+                String[] nnpParts = (String[]) nnps.get(i);//convert object into String[]
+                chapterID = nnpParts[0]; //chapterID
+                lemma = nnpParts[2]; //lemma from filtered nnps
+                //System.out.println(lemma); //lemmas are all there
+                lemmaList = Arrays.asList(lemma); // convert lemmaString into list
+                chapID = Arrays.asList(chapterID);
+                while (count <= 34) {
+                    for (String name : lemmaList) { //go through entities
+                        Integer oldCount = counter.get(name);
+                        if (oldCount == null) {
+                            oldCount = 0;
+                        }
+                        counter.put(lemma, oldCount + 1);
                     }
-                    counter.put(lemma, oldCount + 1);
-                
-                //update values on each chapter
-                if (entry.getValue() != 0) { //only print occurrences
-                    System.out.println(entry.getKey() + "/" + entry.getValue());
+                    count++;
                 }
             }
-            // go through chapters
-            //if lemma equals 
+            int chapSize = Integer.parseInt(chapID.get(chapID.size() - 1));
+            System.out.println(chapSize);
+            //update values on each chapter
+            //print hashmap line by line, for each chapter
+            while ((count <= chapSize) && (currentChap <= chapSize)) {
+                System.out.println("========== Chapter " + currentChap + " ==========");
+                for (Map.Entry<String, Integer> entry : counter.entrySet()) {
+                    if (entry.getValue() != 0) {
+                        System.out.println(entry.getKey() + " : " + entry.getValue());
+                    }
+                    counter.put(entry.getKey(), 0); //reset values to 0
+                }
+                count++;
+                currentChap++;
+            }
+            //if lemma equals
             //reset value to 0 when new chapter begins
         } catch (Exception e) {
             System.out.println("wrong file");
         }
+        return counter;
     }
 
     public HashMap getOccur() {
@@ -63,10 +76,8 @@ public class CountOccur {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Filter filteredChars = new Filter("LotF_Annotated.tsv");
-        CheckChars entities = new CheckChars(filteredChars, "LotFChars.txt");
-        CountOccur test = new CountOccur(filteredChars, entities);
-
+        Filter filteredChars = new Filter("TI_Annotated.tsv");
+        CountOccur test = new CountOccur(filteredChars);
     }
 
 }
