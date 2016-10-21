@@ -12,11 +12,7 @@ import java.util.ArrayList;
  */
 public class Filter {
 	
-	ArrayList<String[]> nnps = new ArrayList();
-
-	public Filter() {
-		// TODO Auto-generated constructor stub
-	}
+	private ArrayList<String[]> nnps = new ArrayList<>();
 	
 	public Filter(String filename) {
 		try  {
@@ -25,7 +21,6 @@ public class Filter {
 		    while ((line = br.readLine()) != null) {
 		       if(line.endsWith("NNP"))
 		       {
-		    	   System.out.println(line);
 		    	   String[] splitline = line.split("\t");
 		    	   String chapId = splitline[0];
 		    	   String sentId = splitline[1];
@@ -34,10 +29,6 @@ public class Filter {
 		    	   nnp[0] = chapId;
 		    	   nnp[1]= sentId;
 		    	   nnp[2] = lemma;
-		    	   for(String thing : nnp){
-		    		   System.out.print(thing + " ");
-		    	   }
-		    	   System.out.println();
 		    	   nnps.add(nnp);
 		    	   
 		       }
@@ -49,16 +40,6 @@ public class Filter {
 	
 	public ArrayList getNNPS() {
 		return nnps;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Filter test = new Filter("LotF_Annotated.tsv");
-		Filter test2 = new Filter("TI_Annotated.tsv");
-		
-
 	}
 
 }
