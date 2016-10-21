@@ -21,10 +21,11 @@ public class CheckChars {
 	private ArrayList<String[]> check(Filter nnpList, String charListFile) {
 		try {
 			ArrayList<?> nnps = nnpList.getNNPS();
+            BufferedReader read = null;
 			
 			for(int i = 0; i < nnps.size(); i++)//go through list of filtered nnps
 			{
-				BufferedReader read = new BufferedReader(new FileReader(new File(charListFile)));
+				read = new BufferedReader(new FileReader(new File(charListFile)));
 				String line;
 				String[] nnpParts = (String[]) nnps.get(i);//lemma from filtered nnps
 				String lemma = nnpParts[2];
@@ -45,8 +46,8 @@ public class CheckChars {
 						}
 					}
 				}
-				read.close();
 			}
+			read.close();
 		} catch (IOException e) {
 			System.out.println("File not found CheckChars.");
 		}
@@ -58,20 +59,20 @@ public class CheckChars {
 		return characters;
 	}
 
-	public static void main(String[] args) {
-		Filter test = new Filter("C:\\Users\\Sarah Dänel\\Documents\\NetBeansProjects\\JavaApplication3\\src\\TI_Annotated.txt");
-		CheckChars chars = new CheckChars(test, "C:\\Users\\Sarah Dänel\\Documents\\NetBeansProjects\\JavaApplication3\\src\\TI_Chars.txt");
+	/*public static void main(String[] args) {
+		Filter test = new Filter("/home/anke/SocialNetwork/TextFiles/TI_Annotated.tsv");
+		CheckChars chars = new CheckChars(test, "/home/anke/SocialNetwork/TextFiles/TI_Chars.txt");
 		ArrayList<String[]> list = chars.getCheckedCharacters();
 		for(int i = 0; i < list.size(); i++)
 		{
 			String[] nnp = list.get(i);
 			for(int j = 0; j < nnp.length; j++)
 			{
-				System.out.print(nnp[j]);
+				System.out.print(nnp[j] + " ");
 			}
 			System.out.println();
 		}
 		 
-	}
+	}*/
 	
 }
