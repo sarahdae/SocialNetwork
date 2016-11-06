@@ -1,0 +1,24 @@
+{
+"nodes":[
+{"name":"Roger", "group":1, "size": 400},
+{"name":"Ralph", "group":1, "size": 5900},
+{"name":"Simon", "group":1, "size": 500},
+{"name":"Eric", "group":1, "size": 100},
+{"name":"Maurice", "group":1, "size": 300},
+{"name":"Piggy", "group":1, "size": 3500},
+{"name":"Beastie", "group":1, "size": 100},
+{"name":"Jack", "group":1, "size": 3100},
+{"name":"Sam", "group":1, "size": 100},
+],
+"links":[
+{"source":0, "target":0, "value":, "length":},
+{"source":1, "target":1, "value":, "length":},
+{"source":2, "target":2, "value":, "length":},
+{"source":3, "target":3, "value":, "length":},
+{"source":4, "target":4, "value":, "length":},
+{"source":5, "target":5, "value":, "length":},
+{"source":6, "target":6, "value":, "length":},
+{"source":7, "target":7, "value":, "length":},
+{"source":8, "target":8, "value":, "length":},
+]
+}
