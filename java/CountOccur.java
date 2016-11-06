@@ -8,12 +8,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class CountOccur {
 
     HashMap<String, Integer> entities = new HashMap<String, Integer>();
     HashMap<String, Integer> events = new HashMap<String, Integer>();
+    List<String> indexes; // for source and target tags in Json file
     ArrayList chaps = new ArrayList();
 
     public CountOccur(CheckChars nnpList) {
@@ -26,11 +28,13 @@ public class CountOccur {
             String chapterID = "";
             String sentenceID = "";
             String chapNum = ""; //only digits as String
-            String newKey ="";
+            String newKey = "";
             ArrayList nnps = nnpList.getCheckedCharacters();
             List<String> chapID = new ArrayList();
             List<String> lemmaList = new ArrayList();
-            
+            String currChap = "2"; //starting from one
+            String currSent = "1";
+
             for (int i = 0; i < nnps.size(); i++) { //LOOP TO GO THROUGH LIST OF NNPS
                 String[] nnpParts = (String[]) nnps.get(i);//convert object into String[]
                 chapterID = nnpParts[0]; //chapterID
@@ -39,11 +43,7 @@ public class CountOccur {
                 //System.out.println(lemma); //lemmas are all there
                 lemmaList = Arrays.asList(lemma); // convert lemmaString into lemmaList
                 chapID = Arrays.asList(chapterID); //
-                
-                String currChap= "1"; //starting from one
-                String currSent="1";
-                
-                //I NEED INPUT NUMBER (as String) OF VIS SLIDER (chapNum)
+
                 //only counting one chapter by one
                 if (chapterID.equals(currChap)) {
                     for (String name : lemmaList) { //go through lemmaList
@@ -53,17 +53,19 @@ public class CountOccur {
                         }
                         //add lemma and number of occurences into hashmap
                         entities.put(lemma, oldCount + 1);
+                        indexes = new ArrayList<String>(entities.keySet()); // <== Parse
+
                     }
-                    
+
                 }
-                    //EVENT COUNTING STARTS HERE
-                    //if two or more entities exist in same or the next sentence
-                    //new event is created
+                //EVENT COUNTING STARTS HERE - STILL DOES NOT REALLY WORK
+                //if two or more entities exist in same or the next sentence
+                //new event is created
                 //e.g.: given chapter1: in sentence 
-                if (sentenceID.equals(currSent)){ //choose sentence
-                    for(String event : chapID){
+                if (sentenceID.equals(currSent)) { //choose sentence
+                    for (String event : chapID) {
                         Integer evCount = events.get(event);
-                           if (evCount == null) {
+                        if (evCount == null) {
                             evCount = 0;
                         }
                         events.put(chapterID, evCount + 1);
@@ -73,20 +75,48 @@ public class CountOccur {
             }
 
             //print hashmap line by line, for each chapter
-            System.out.println("========== chapter "+chapterID+"==========");
+            System.out.println("========== chapter " + currChap + "==========");
             for (Map.Entry<String, Integer> entry : entities.entrySet()) {
                 if (entry.getValue() != 0) {
-                    System.out.println(entry.getKey() + " : " + entry.getValue());
+                    System.out.println(indexes.indexOf(entry.getKey()) + entry.getKey() + " : " + entry.getValue());
                 }
             }
-                        System.out.println("========== sentences "+chaps.toString()+"==========");
-                        for (Map.Entry<String, Integer> sth : events.entrySet()) {
+            
+            //THIS STILL DOES NOT WORK PROPERLY
+            System.out.println("========== Events in Sentence " + currSent + "==========");
+            for (Map.Entry<String, Integer> sth : events.entrySet()) {
                 if (sth.getValue() != 0) {
                     System.out.println(sth.getKey() + " : " + sth.getValue());
                 }
             }
-            //if lemma equals
-            //reset value to 0 when new chapter begins
+
+            //creates new json file and print solution into it
+            try {
+                PrintWriter writer = new PrintWriter("countOcc.json", "UTF-8");
+                writer.println("{");
+
+                writer.println("\"nodes\":[");
+                for (Map.Entry<String, Integer> entry : entities.entrySet()) {
+                    if (entry.getValue() != 0) {
+                        writer.println("{\"name\":\"" + entry.getKey() + "\", \"group\":1, \"size\": " + (entry.getValue() + "00") + "},");
+                    }
+                }
+                writer.println("],");
+
+                writer.println("\"links\":[");
+                for (Map.Entry<String, Integer> entry : entities.entrySet()) {
+                    if (entry.getValue() != 0) {
+                        writer.println("{\"source\":" + indexes.indexOf(entry.getKey()) + ", \"target\":"+ indexes.indexOf(entry.getKey()) +", \"value\":, \"length\":},");
+                    }
+                }
+                writer.println("]");
+
+                writer.println("}");
+                writer.close();
+            } catch (Exception e) {
+                System.out.println("could not output file");
+            }
+
         } catch (Exception e) {
             System.out.println("wrong file");
         }
@@ -101,8 +131,8 @@ public class CountOccur {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Filter filteredChars = new Filter("LotF_Annotated.tsv");
-        CheckChars check = new CheckChars(filteredChars, "LotFChars.txt");
+        Filter filteredChars = new Filter("E:\\E_Dokumente\\semester7\\wolskaProject\\WolskaProject\\src\\LotF_Annotated.tsv");
+        CheckChars check = new CheckChars(filteredChars, "E:\\E_Dokumente\\semester7\\wolskaProject\\WolskaProject\\src\\LotFChars.txt");
         CountOccur test = new CountOccur(check);
     }
 
