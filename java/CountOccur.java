@@ -16,7 +16,6 @@ public class CountOccur {
     HashMap<String, Integer> entities = new HashMap<String, Integer>();
     HashMap<String, Integer> events = new HashMap<String, Integer>();
     List<String> indexes; // for source and target tags in Json file
-    ArrayList chaps = new ArrayList();
 
     public CountOccur(CheckChars nnpList) {
         entities = this.counting(nnpList);
@@ -27,8 +26,7 @@ public class CountOccur {
             String lemma = "";
             String chapterID = "";
             String sentenceID = "";
-            String chapNum = ""; //only digits as String
-            String newKey = "";
+
             ArrayList nnps = nnpList.getCheckedCharacters();
             List<String> chapID = new ArrayList();
             List<String> lemmaList = new ArrayList();
