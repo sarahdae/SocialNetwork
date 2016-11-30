@@ -3,7 +3,7 @@
  * zählt, wie oft die Personen in jedem Kapitel erwähnt wird wenn in der vis das
  * jeweilige kapitel ausgewählt wird, wird das programm von neuem starten
  * output:JSON file with data
- * made by Anke Rüb
+ * made by Anke Rüb and An Khuong Bui
  */
 import java.io.BufferedReader;
 import java.io.File;
@@ -123,9 +123,14 @@ public class CountOccur {
     public void createJson() {
         //creates new json file and print solution into it
         String sourcePerson = getMaxOccuring(entities);
+        int indexOfMain=0;
         Map<String, Integer> hash = new HashMap<>();
-        hash.put(sourcePerson, 1); //this still does not work like that
+        hash.put(sourcePerson, 0);
         HashMap<String, Integer> getEdges = getCooccurrenceEdges();
+                    for (Map.Entry<String, Integer> entry : hash.entrySet()) {
+                     indexOfMain= indexes.indexOf(entry.getKey());
+                    }
+        
         try {
             PrintWriter writer = new PrintWriter("countOcc.json", "UTF-8");
             writer.println("{");
@@ -146,7 +151,7 @@ public class CountOccur {
             writer.println("\"links\":[");
             for (Map.Entry<String, Integer> entry : cooccurrenceEdges.entrySet()) {
                 if (entry.getValue() != 0) {
-                    writer.println("{\"source\":" + hash.get(sourcePerson)
+                    writer.println("{\"source\":" + indexOfMain
                             + ", \"target\":" + indexes.indexOf(entry.getKey())
                             + ", \"value\":1" //still needs to be programed
                             + ", \"length\": " + (entry.getValue() * 1000) + "},");
