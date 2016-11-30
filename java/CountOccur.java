@@ -124,7 +124,7 @@ public class CountOccur {
         //creates new json file and print solution into it
         String sourcePerson = getMaxOccuring(entities);
         Map<String, Integer> hash = new HashMap<>();
-        hash.put(sourcePerson, 0);
+        hash.put(sourcePerson, 1); //this still does not work like that
         HashMap<String, Integer> getEdges = getCooccurrenceEdges();
         try {
             PrintWriter writer = new PrintWriter("countOcc.json", "UTF-8");
