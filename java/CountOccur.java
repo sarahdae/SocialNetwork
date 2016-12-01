@@ -132,7 +132,7 @@ public class CountOccur {
                     }
         
         try {
-            PrintWriter writer = new PrintWriter("countOcc.json", "UTF-8");
+            PrintWriter writer = new PrintWriter("web/countOcc.json", "UTF-8");
             writer.println("{");
 
             //NODES
