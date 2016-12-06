@@ -2,8 +2,7 @@
 /**
  * zählt, wie oft die Personen in jedem Kapitel erwähnt wird wenn in der vis das
  * jeweilige kapitel ausgewählt wird, wird das programm von neuem starten
- * output:JSON file with data
- * made by Anke Rüb and An Khuong Bui
+ * output:JSON file with data made by Anke Rüb
  */
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class CountOccur {
 
@@ -32,7 +33,6 @@ public class CountOccur {
             String lemma = "";
             String chapterID = "";
             String sentenceID = "";
-            //ArrayList nnps = nnpList.getCheckedCharacters();
             List<String> chapID;
             List<String> lemmaList = new ArrayList<>();
 
@@ -55,6 +55,14 @@ public class CountOccur {
                         entities.put(lemma, oldCount + 1);
                         indexes = new ArrayList<>(entities.keySet()); // <== Parse
                     }
+                }
+            }
+
+            //print hashmap line by line, for each chapter
+            System.out.println("========== chapter " + currentChapter + "==========");
+            for (Map.Entry<String, Integer> entry : entities.entrySet()) {
+                if (entry.getValue() != 0) {
+                    System.out.println(indexes.indexOf(entry.getKey()) + " " + entry.getKey() + " : " + entry.getValue());
                 }
             }
         } catch (Exception e) {
@@ -116,59 +124,66 @@ public class CountOccur {
                 }
             }
         }
+        System.out.println(mainPerson);
+        System.out.println(cooccurrenceEdges);
 
         return cooccurrenceEdges;
     }
 
     public void createJson() {
-        //creates new json file and print solution into it
+        JSONObject root = new JSONObject(); //actual json file root
+        JSONArray listNodes = new JSONArray(); //array for nodes
+        JSONArray listLinks = new JSONArray(); //array for links
+
         String sourcePerson = getMaxOccuring(entities);
-        int indexOfMain=0;
+        int indexOfMain = 0;
         Map<String, Integer> hash = new HashMap<>();
         hash.put(sourcePerson, 0);
         HashMap<String, Integer> getEdges = getCooccurrenceEdges();
-                    for (Map.Entry<String, Integer> entry : hash.entrySet()) {
-                     indexOfMain= indexes.indexOf(entry.getKey());
-                    }
-        
+        for (Map.Entry<String, Integer> entry : hash.entrySet()) {
+            indexOfMain = indexes.indexOf(entry.getKey());
+        }
+
+        //NODES
+        for (Map.Entry<String, Integer> entry : entities.entrySet()) {
+            if (entry.getValue() != 0) {
+                JSONObject nodesData = new JSONObject(); //data of name,group,size
+                nodesData.put("name", entry.getKey());
+                nodesData.put("group", 1);
+                nodesData.put("size", entry.getValue() * 1000);
+
+                //add the data into the array
+                listNodes.add(nodesData);
+            }
+        }
+        root.put("nodes", listNodes);
+
+        //LINKS
+        for (Map.Entry<String, Integer> entry : cooccurrenceEdges.entrySet()) {
+            if (entry.getValue() != 0) {
+                JSONObject linksData = new JSONObject(); // data of source,target,value,length
+                linksData.put("source", indexOfMain);
+                linksData.put("target", (indexes.indexOf(entry.getKey())));
+                linksData.put("value", 1);
+                linksData.put("length", (entry.getValue() * 1000));
+                listLinks.add(linksData);
+
+            }
+        }
+        root.put("links", listLinks);
+
+        //creates new json file and print solution into it
         try {
-            PrintWriter writer = new PrintWriter("web/countOcc.json", "UTF-8");
-            writer.println("{");
-
-            //NODES
-            writer.println("\"nodes\":[");
-            for (Map.Entry<String, Integer> entry : entities.entrySet()) {
-                if (entry.getValue() != 0) {
-                    writer.println("{\"name\":\"" + entry.getKey() + "\""
-                            + ", \"group\":1"
-                            + ", \"size\": " + (entry.getValue() * 1000) + "},");
-                }
-            }
-            writer.println("],");
-
-            //LINKS
-            //entities = getCooccurrenceEdges(); //HIER WIRD INHALT VON ENTITIES GEÄNDERT
-            writer.println("\"links\":[");
-            for (Map.Entry<String, Integer> entry : cooccurrenceEdges.entrySet()) {
-                if (entry.getValue() != 0) {
-                    writer.println("{\"source\":" + indexOfMain
-                            + ", \"target\":" + indexes.indexOf(entry.getKey())
-                            + ", \"value\":1" //still needs to be programed
-                            + ", \"length\": " + (entry.getValue() * 1000) + "},");
-
-                }
-
-            }
-            writer.println("]");
-
-            writer.println("}");
+            PrintWriter writer = new PrintWriter("web/countOccur.json",
+                    "UTF-8");
+            writer.print(root);
             writer.close();
         } catch (Exception e) {
             System.out.println("could not output file");
         }
     }
-    
-        public HashMap getOccur() {
+
+    public HashMap getOccur() {
         return entities;
     }
 
