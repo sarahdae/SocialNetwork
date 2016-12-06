@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset='utf-8'>
+        <title>Visualisation Treasure Island</title>
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Visualisation Lord of the Flies</title>
         <link rel="stylesheet" type="text/css" href="networks.css"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -15,12 +15,11 @@
         <button class="standard-button" onclick="window.location.href = './welcome.html'">Back</button><br><br>
         <script src='http://d3js.org/d3.v3.min.js'></script>
         <script type="text/javascript" src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-
         <script>
 
 
-//Dimensions of the visualization
-            var width = 740,
+            //Dimensions of the visualization
+            var width = 840,
                     height = 580;
             var color = d3.scale.category20();
             //create a SVG container which holds the visualization
@@ -38,70 +37,79 @@
                     })
             svg.call(tip);
 
-
-
+            //call the json file which gives the informations for the visualisation
             d3.json("countOcc.json", function (error, graph) {
                 if (error)
-                        throw error;
-                    //Create a force layout object
-                    //Set the size of the object to the predefined size 
-                    //and define the linkDistance between the nodes
-                    var force = d3.layout.force()
-                            .size([width, height])
-                            .nodes(graph.nodes)
-                            .links(graph.links)
-                            .linkDistance(function (d) {
+                    throw error;
 
+                //Create a force layout object
+                //Set the size of the object to the predefined size 
+                //and define the linkDistance between the nodes
+                var force = d3.layout.force()
+                        .size([width, height])
+                        .nodes(graph.nodes)
+                        .links(graph.links)
 
+                        //the longest length in the json file stands for the highest number of events
+                        //to be displayed it needs to be converted here
+                        //the more events between the protagonists, the closer they need to be
+                        .linkDistance(function (d) {
 
-                                if (d.length === 1000) {
-                                    return Math.sqrt(d.length) * 12.5;
-                                } else if (d.length === 2000) {
-                                    return Math.sqrt(d.length) * 6;
-                                } else if (d.length === 3000) {
-                                    return Math.sqrt(d.length) * 3.8;
-                                } else if (d.length === 4000) {
-                                    return Math.sqrt(d.length) * 2.7;
-                                } else if (d.length === 5000) {
-                                    return Math.sqrt(d.length) * 2;
-                                } else if (d.length >= 6000) {
-                                    return Math.sqrt(d.length) * 1.5;
-                                } else if (d.length >= 8000) {
-                                    return Math.sqrt(d.length);
-                                } else if (d.length === 10000) {
-                                    return Math.sqrt(d.length) / 1.25;
-                                } else if (d.length >= 11000) {
-                                    return Math.sqrt(d.length) / 1.5;
-                                } else if (d.length === 13000) {
-                                    return Math.sqrt(d.length) / 2;
-                                } else if (d.length >= 14000) {
-                                    return Math.sqrt(d.length) / 2.5;
-                                } else if (d.length === 16000) {
-                                    return Math.sqrt(d.length) / 3;
-                                } else if (d.length === 17000) {
-                                    return Math.sqrt(d.length) / 4;
-                                } else if (d.length === 18000) {
-                                    return Math.sqrt(d.length) / 4.5;
-                                } else if (d.length === 19000) {
-                                    return Math.sqrt(d.length) / 5;
-                                } else if (d.length === 20000) {
-                                    return Math.sqrt(d.length) / 6;
-                                } else if (d.length === 21000) {
-                                    return Math.sqrt(d.length) / 8;
-                                } else if (d.length === 22000) {
-                                    return Math.sqrt(d.length) / 11;
-                                } else if (d.length === 23000) {
-                                    return Math.sqrt(d.length) / 15;
-                                } else if (d.length === 24000) {
-                                    return Math.sqrt(d.length) / 24;
-                                } else if (d.length === 25000) {
-                                    return Math.sqrt(d.length) / 50;
-                                } else {
-                                    return Math.sqrt(d.length);
-                                }
-                            })
-                            .start();
-                // return Math.sqrt(d.length) * 2;
+                            if (d.length === 1000) {
+                                return Math.sqrt(d.length) * 12.5;
+                            } else if (d.length === 2000) {
+                                return Math.sqrt(d.length) * 6;
+                            } else if (d.length === 3000) {
+                                return Math.sqrt(d.length) * 3.8;
+                            } else if (d.length === 4000) {
+                                return Math.sqrt(d.length) * 2.7;
+                            } else if (d.length === 5000) {
+                                return Math.sqrt(d.length) * 2;
+                            } else if (d.length === 6000) {
+                                return Math.sqrt(d.length) * 1.5;
+                            } else if (d.length === 7000) {
+                                return Math.sqrt(d.length) * 1.5;
+                            } else if (d.length === 8000) {
+                                return Math.sqrt(d.length);
+                            } else if (d.length === 9000) {
+                                return Math.sqrt(d.length);
+                            } else if (d.length === 10000) {
+                                return Math.sqrt(d.length) / 1.25;
+                            } else if (d.length === 11000) {
+                                return Math.sqrt(d.length) / 1.5;
+                            } else if (d.length === 12000) {
+                                return Math.sqrt(d.length) / 1.5;
+                            } else if (d.length === 13000) {
+                                return Math.sqrt(d.length) / 2;
+                            } else if (d.length === 14000) {
+                                return Math.sqrt(d.length) / 2.5;
+                            } else if (d.length === 15000) {
+                                return Math.sqrt(d.length) / 2.5;
+                            } else if (d.length === 16000) {
+                                return Math.sqrt(d.length) / 3;
+                            } else if (d.length === 17000) {
+                                return Math.sqrt(d.length) / 4;
+                            } else if (d.length === 18000) {
+                                return Math.sqrt(d.length) / 4.5;
+                            } else if (d.length === 19000) {
+                                return Math.sqrt(d.length) / 5;
+                            } else if (d.length === 20000) {
+                                return Math.sqrt(d.length) / 6;
+                            } else if (d.length === 21000) {
+                                return Math.sqrt(d.length) / 8;
+                            } else if (d.length === 22000) {
+                                return Math.sqrt(d.length) / 11;
+                            } else if (d.length === 23000) {
+                                return Math.sqrt(d.length) / 15;
+                            } else if (d.length === 24000) {
+                                return Math.sqrt(d.length) / 24;
+                            } else if (d.length === 25000) {
+                                return Math.sqrt(d.length) / 25;
+                            } else {
+                                return Math.sqrt(d.length);
+                            }
+                        })
+                        .start();
 
                 //add links to the visualization
                 var link = svg.selectAll('.link')
@@ -146,6 +154,8 @@
                                 return d.y;
                             });
                 });
+
+                //This part gives the possibility to fade all nodes that are not connected to the one that is clicked on
                 //Toggle stores whether the highlighting is on
                 var toggle = 0;
                 //Create an array logging what is connected to what
@@ -202,7 +212,7 @@
             //    var parameters = {jnlp_href: 'NetworksApplet.jnlp'};
             //    deployJava.runApplet(attributes, parameters, '1.6');
 
-            //Slider
+            //javascript Slider
             var selection;
             var chap;
             $(function () {
@@ -253,23 +263,23 @@
 
         </script>
 
-    <applet code="NewJApplet" name="testApplet" width="300" height="100"></applet>
-    <button onclick="document.NewJApplet.main()">Test</button>
+    <!--Applet wird jetzt geladen: 
+        - Build project, dann sollte im ..\Project\build\web\WEB-INF\classes eine NewJApplet.class sein
+        - NewJApplet.class in den Ordner web-pages (sollte alle html Dateien enthalten) verschieben -->
+    <!-- Bei Problemen des Browsers mit den java Sicherheitseinstellungen (ab java 8) muss http://localhost:8080/ in der java-config 
+         (auf dem Betriebssystem) zur Ausnahmeliste hinzugefügt werden. 
+         Nach Neustart des Browsers sollte das Applet dann erscheinen. -->       
 
+        <!-- add an applet containing a slider -->
+    <applet code="NewJApplet.class" name="testApplet" width="900" height="100"></applet>
     <!-- Label of the slider -->
     <p>
         <label for="amount">Chapter:</label>
         <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 25px; text-align: center;">
     </p>
     <div id="slider-horizontal" style="height:10px;"></div>
-    <p>
-
-    </p>
-
-
-    <!--Depending on the chosen value on the slider, another json file is used
-    or only one file which is filtered after the chapter No.??-->
-
 
 </body>
 </html>
+
+
