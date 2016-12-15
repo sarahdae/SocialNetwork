@@ -1,19 +1,25 @@
 
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.Graphics;
 
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
 
 public class NewJApplet extends JApplet {
 
     private JSlider sb = new JSlider(JSlider.HORIZONTAL, 0, 30, 10);
+    int chapter;
+    String file1 = "C:\\Users\\Sarah Dänel\\Documents\\NetBeansProjects\\Networks2\\src\\java\\LotF_Annotated.tsv";
+    String file2 = "C:\\Users\\Sarah Dänel\\Documents\\NetBeansProjects\\Networks2\\src\\java\\LotFChars.txt";
+    MainClass mainClass;
 
     public void init() {
         JLabel sliderLabel = new JLabel("Chapter", JLabel.CENTER);
         sliderLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(sliderLabel);
         sb.setValue(0);
         sb.setPaintTicks(true);
         sb.setMajorTickSpacing(5);
@@ -21,10 +27,24 @@ public class NewJApplet extends JApplet {
         sb.setSnapToTicks(true);
         sb.setPaintTrack(false);
         sb.setPaintLabels(true);
-
+        Font font = new Font("Helvetica", Font.BOLD, 16);
+        sb.setFont(font);
+        //add(sliderLabel);
         add(sb);
     }
-
+    
+    public void stateChanged(ChangeEvent e){
+    JSlider source = (JSlider)e.getSource();
+    if(!source.getValueIsAdjusting()){
+    chapter = (int)source.getValue();
+    mainClass = new MainClass(chapter, file1, file2);
+   
+    } else {
+    chapter = 1;
+    }
+    }
+    
+    
     public static void main(String[] args) {
         run(new NewJApplet(), 1000, 500);
     }
