@@ -19,7 +19,7 @@
 
 
             //Dimensions of the visualization
-            var width = 840,
+            var width = 950,
                     height = 580;
             var color = d3.scale.category20();
             //create a SVG container which holds the visualization
@@ -205,15 +205,9 @@
             });
 
 
-<!-- Vertical slider -->
-<!-- applet id can be used to get a reference to the applet object -->
-            //          var attributes = {id: 'NetworksApplet',
-            //                code: 'NetworksApplet', width: 1, height: 1};
-            //    var parameters = {jnlp_href: 'NetworksApplet.jnlp'};
-            //    deployJava.runApplet(attributes, parameters, '1.6');
-
+          
             //javascript Slider
-            var selection;
+         /**  var selection;
             var chap;
             $(function () {
                 $("#slider-horizontal").slider({
@@ -256,8 +250,7 @@
                 }
                 console.log(chap);
 
-            });
-
+            }); */ 
             //System.out.print(chap);
 
 
@@ -268,18 +261,16 @@
         - NewJApplet.class in den Ordner web-pages (sollte alle html Dateien enthalten) verschieben -->
     <!-- Bei Problemen des Browsers mit den java Sicherheitseinstellungen (ab java 8) muss http://localhost:8080/ in der java-config 
          (auf dem Betriebssystem) zur Ausnahmeliste hinzugefügt werden. 
-         Nach Neustart des Browsers sollte das Applet dann erscheinen. -->       
-
-        <!-- add an applet containing a slider -->
-    <applet code="NewJApplet.class" name="testApplet" width="900" height="100"></applet>
-    <!-- Label of the slider -->
+         Nach Neustart des Browsers sollte das Applet dann erscheinen. -->   
+    <!-- add an applet containing a slider -->
     <p>
         <label for="amount">Chapter:</label>
         <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 25px; text-align: center;">
     </p>
-    <div id="slider-horizontal" style="height:10px;"></div>
+    <applet code="NewJApplet.class" name="testApplet" width="950" height="50"></applet>
+ <INPUT TYPE="button" onClick="history.go(0)" VALUE="Refresh">    <!-- Label of the slider -->
+    
+   <!-- <div id="slider-horizontal" style="height:10px;"></div> -->
 
 </body>
 </html>
-
-
