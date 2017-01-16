@@ -166,7 +166,7 @@ public class CountOccur {
         root.put("links", listLinks);
         //creates new json file and print solution into it
         try {
-            PrintWriter writer = new PrintWriter("countOcc.json", "UTF-8");
+            PrintWriter writer = new PrintWriter("web\countOcc.json", "UTF-8");
             writer.print(root);
             writer.close();
         } catch (Exception e) {
