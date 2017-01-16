@@ -14,6 +14,7 @@ h2 { font-size: 20px; margin: 0 0 16px; line-height: 22px; font-weight: normal;}
 h3 { font-size: 14px; font-weight: bold; margin: 0 0 11px 0; line-height: 17px; font-weight: bold;}
 p {font-size: 13px; margin: 0 0 9px; line-height: 19px;}
 p.teaser {padding: 10px; width: 83.7%; background-color: white;}
+applet {background-color: aliceblue;}
 .standard-button {background-color: white; color: black; border: 1.5px solid black; border-radius: 3px;}
 .button {background-color: white; color: black; border: none;}
 /*  SECTIONS  */
@@ -83,5 +84,12 @@ footer {display: block;}
 d3-tip {
     line-height: 1;
     color: black;
+}
+
+.dropbtn {background-color: white; color: black; border: 1.5px solid black; border-radius: 3px;}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+    background-color: white;
 }
 
