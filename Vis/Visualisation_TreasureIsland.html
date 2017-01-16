@@ -18,14 +18,50 @@ and open the template in the editor.
     <body>
         <!--Button to go back to the main page-->
         <button class="standard-button" onclick="window.location.href = './welcome.html'">Back</button><br><br>
+        <select id ="dropbtn" class='dropbtn' name="ddl" onmousedown="this.value = '';" onchange="updateData(this.value);">
+            <option value='1TI.json'>Chapter 1</option>
+            <option value='2TI.json'>Chapter 2</option>
+            <option value='3TI.json'>Chapter 3</option>
+            <option value='4TI.json'>Chapter 4</option>
+            <option value='5TI.json'>Chapter 5</option>
+            <option value='6TI.json'>Chapter 6</option>
+            <option value='7TI.json'>Chapter 7</option>
+            <option value='8TI.json'>Chapter 8</option>
+            <option value='9TI.json'>Chapter 9</option>
+            <option value='10TI.json'>Chapter 10</option>
+            <option value='11TI.json'>Chapter 11</option>
+            <option value='12TI.json'>Chapter 12</option>
+            <option value='13TI.json'>Chapter 13</option>
+            <option value='14TI.json'>Chapter 14</option>
+            <option value='15TI.json'>Chapter 15</option>
+            <option value='16TI.json'>Chapter 16</option>
+            <option value='17TI.json'>Chapter 17</option>
+            <option value='18TI.json'>Chapter 18</option>
+            <option value='19TI.json'>Chapter 19</option>
+            <option value='20TI.json'>Chapter 20</option>
+            <option value='21TI.json'>Chapter 21</option>
+            <option value='22TI.json'>Chapter 22</option>
+            <option value='23TI.json'>Chapter 23</option>
+            <option value='24TI.json'>Chapter 24</option>
+            <option value='25TI.json'>Chapter 25</option>
+            <option value='26TI.json'>Chapter 26</option>
+            <option value='27TI.json'>Chapter 27</option>
+            <option value='28TI.json'>Chapter 28</option>
+            <option value='29TI.json'>Chapter 29</option>
+            <option value='30TI.json'>Chapter 30</option>
+            <option value='31TI.json'>Chapter 31</option>
+            <option value='32TI.json'>Chapter 32</option>
+            <option value='33TI.json'>Chapter 33</option>
+            <option value='34TI.json'>Chapter 34</option>
+        </select>
         <script src='http://d3js.org/d3.v3.min.js'></script>
         <script type="text/javascript" src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <script>
-           
-            
-            
-            //Dimensions of the visualization
-            var width = 740,
+
+
+
+           //Dimensions of the visualization
+            var width = 950,
                     height = 580;
             var color = d3.scale.category20();
             //create a SVG container which holds the visualization
@@ -43,24 +79,83 @@ and open the template in the editor.
                     })
             svg.call(tip);
 
-            
 
-            d3.json("countOcc.json", function (error, graph) {
+
+
+            d3.json("1TI.json", function (error, graph) {
                 if (error)
                     throw error;
 
-                
-                //Create a force layout object
+
+                 //Create a force layout object
                 //Set the size of the object to the predefined size 
                 //and define the linkDistance between the nodes
                 var force = d3.layout.force()
                         .size([width, height])
                         .nodes(graph.nodes)
                         .links(graph.links)
+
+                        //the longest length in the json file stands for the highest number of events
+                        //to be displayed it needs to be converted here
+                        //the more events between the protagonists, the closer they need to be
                         .linkDistance(function (d) {
-                            return Math.sqrt(d.length) * 5 || 4.5;
+
+                            if (d.length === 1000) {
+                                return Math.sqrt(d.length) * 12.5;
+                            } else if (d.length === 2000) {
+                                return Math.sqrt(d.length) * 6;
+                            } else if (d.length === 3000) {
+                                return Math.sqrt(d.length) * 3.8;
+                            } else if (d.length === 4000) {
+                                return Math.sqrt(d.length) * 2.7;
+                            } else if (d.length === 5000) {
+                                return Math.sqrt(d.length) * 2;
+                            } else if (d.length === 6000) {
+                                return Math.sqrt(d.length) * 1.5;
+                            } else if (d.length === 7000) {
+                                return Math.sqrt(d.length) * 1.5;
+                            } else if (d.length === 8000) {
+                                return Math.sqrt(d.length);
+                            } else if (d.length === 9000) {
+                                return Math.sqrt(d.length);
+                            } else if (d.length === 10000) {
+                                return Math.sqrt(d.length) / 1.25;
+                            } else if (d.length === 11000) {
+                                return Math.sqrt(d.length) / 1.5;
+                            } else if (d.length === 12000) {
+                                return Math.sqrt(d.length) / 1.5;
+                            } else if (d.length === 13000) {
+                                return Math.sqrt(d.length) / 2;
+                            } else if (d.length === 14000) {
+                                return Math.sqrt(d.length) / 2.5;
+                            } else if (d.length === 15000) {
+                                return Math.sqrt(d.length) / 2.5;
+                            } else if (d.length === 16000) {
+                                return Math.sqrt(d.length) / 3;
+                            } else if (d.length === 17000) {
+                                return Math.sqrt(d.length) / 4;
+                            } else if (d.length === 18000) {
+                                return Math.sqrt(d.length) / 4.5;
+                            } else if (d.length === 19000) {
+                                return Math.sqrt(d.length) / 5;
+                            } else if (d.length === 20000) {
+                                return Math.sqrt(d.length) / 6;
+                            } else if (d.length === 21000) {
+                                return Math.sqrt(d.length) / 8;
+                            } else if (d.length === 22000) {
+                                return Math.sqrt(d.length) / 11;
+                            } else if (d.length === 23000) {
+                                return Math.sqrt(d.length) / 15;
+                            } else if (d.length === 24000) {
+                                return Math.sqrt(d.length) / 24;
+                            } else if (d.length === 25000) {
+                                return Math.sqrt(d.length) / 25;
+                            } else {
+                                return Math.sqrt(d.length);
+                            }
                         })
                         .start();
+
                 //add links to the visualization
                 var link = svg.selectAll('.link')
                         .data(graph.links)
@@ -84,11 +179,6 @@ and open the template in the editor.
                         .on('mouseover', tip.show) //Added
                         .on('mouseout', tip.hide) //Added
                         .on('click', connectedNodes);
-                        
-
-
-
-
                 force.on("tick", function () {
                     link.attr("x1", function (d) {
                         return d.source.x;
@@ -110,8 +200,7 @@ and open the template in the editor.
                             });
                 });
 
-
-
+                //This part gives the possibility to fade all nodes that are not connected to the one that is clicked on
                 //Toggle stores whether the highlighting is on
                 var toggle = 0;
                 //Create an array logging what is connected to what
@@ -127,7 +216,7 @@ and open the template in the editor.
                 function neighboring(a, b) {
                     return linkedByIndex[a.index + "," + b.index];
                 }
-                
+
                 //Reduce opacity of all but the neighbouring nodes
                 function connectedNodes() {
                     if (toggle === 0) {
@@ -147,67 +236,206 @@ and open the template in the editor.
                         toggle = 0;
                     }
                 }
-                
+
                 //Show all nodes without reduced opacity (only needed by mouseover)
-             /*   function allNodes() {
-                    if (toggle !== 0) {
-                       //Put them back to opacity=1
-                        node.style("opacity", 1);
-                        link.style("opacity", 1);
-                        toggle = 0;
-                    }
-                    toggle = 0;
-                    }*/
-         });
-        
-        <!-- Vertical slider -->
-  
-            
-            //Slider
-            var selection;
-            var chap;
-            $(function () {
-                $("#slider-horizontal").slider({
-                    orientation: "horizontal",
-                    range: "min",
-                    min: 0,
-                    max: 34,
-                    value: 1,
-                    slide: function (event, ui) {
-                        $("#amount").val(ui.value);
-                    }
-                });
-                $("#amount").val($("#slider-horizontal").slider("value"));
-                selection = $(".slider-horizontal").slider("value");
+                /*   function allNodes() {
+                 if (toggle !== 0) {
+                 //Put them back to opacity=1
+                 node.style("opacity", 1);
+                 link.style("opacity", 1);
+                 toggle = 0;
+                 }
+                 toggle = 0;
+                 }*/
             });
-            
-            if (selection === 1) {
-                chap = "Chapter1.txt";
-            } else if (selection === 2) {
-                chap = "Chapter2.txt";
-            } else {
-                chap = "else";
+
+            //Update the graph when clicking the update-button
+            function updateData(file) {
+
+                //removes the graph that is shown at the moment
+                d3.select("svg").remove();
+                
+                //the following part creates a new graph in a new container
+
+                //Dimensions of the visualization
+                var width = 950,
+                        height = 580;
+                var color = d3.scale.category20();
+                //create a SVG container which holds the visualization
+                //and specifiy the dimensions for this oontainer
+                var svg = d3.select('body').append('svg')
+                        .attr('width', width)
+                        .attr('height', height)
+
+                //Set up tooltip
+                var tip = d3.tip()
+                        .attr('class', 'd3-tip')
+                        .offset([-10, 0])
+                        .html(function (d) {
+                            return  d.name + "</span>";
+                        })
+                svg.call(tip);
+
+                //call the json file which gives the informations for the visualisation
+                d3.json(file, function (error, graph) {
+                    if (error)
+                        throw error;
+
+                    //Create a force layout object
+                    //Set the size of the object to the predefined size 
+                    //and define the linkDistance between the nodes
+                    force = d3.layout.force()
+                            .size([width, height])
+                            .nodes(graph.nodes)
+                            .links(graph.links)
+
+                            //the longest length in the json file stands for the highest number of events
+                            //to be displayed it needs to be converted here
+                            //the more events between the protagonists, the closer they need to be
+                            .linkDistance(function (d) {
+
+                                if (d.length === 1000) {
+                                    return Math.sqrt(d.length) * 12.5;
+                                } else if (d.length === 2000) {
+                                    return Math.sqrt(d.length) * 6;
+                                } else if (d.length === 3000) {
+                                    return Math.sqrt(d.length) * 3.8;
+                                } else if (d.length === 4000) {
+                                    return Math.sqrt(d.length) * 2.7;
+                                } else if (d.length === 5000) {
+                                    return Math.sqrt(d.length) * 2;
+                                } else if (d.length === 6000) {
+                                    return Math.sqrt(d.length) * 1.5;
+                                } else if (d.length === 7000) {
+                                    return Math.sqrt(d.length) * 1.5;
+                                } else if (d.length === 8000) {
+                                    return Math.sqrt(d.length);
+                                } else if (d.length === 9000) {
+                                    return Math.sqrt(d.length);
+                                } else if (d.length === 10000) {
+                                    return Math.sqrt(d.length) / 1.25;
+                                } else if (d.length === 11000) {
+                                    return Math.sqrt(d.length) / 1.5;
+                                } else if (d.length === 12000) {
+                                    return Math.sqrt(d.length) / 1.5;
+                                } else if (d.length === 13000) {
+                                    return Math.sqrt(d.length) / 2;
+                                } else if (d.length === 14000) {
+                                    return Math.sqrt(d.length) / 2.5;
+                                } else if (d.length === 15000) {
+                                    return Math.sqrt(d.length) / 2.5;
+                                } else if (d.length === 16000) {
+                                    return Math.sqrt(d.length) / 3;
+                                } else if (d.length === 17000) {
+                                    return Math.sqrt(d.length) / 4;
+                                } else if (d.length === 18000) {
+                                    return Math.sqrt(d.length) / 4.5;
+                                } else if (d.length === 19000) {
+                                    return Math.sqrt(d.length) / 5;
+                                } else if (d.length === 20000) {
+                                    return Math.sqrt(d.length) / 6;
+                                } else if (d.length === 21000) {
+                                    return Math.sqrt(d.length) / 8;
+                                } else if (d.length === 22000) {
+                                    return Math.sqrt(d.length) / 11;
+                                } else if (d.length === 23000) {
+                                    return Math.sqrt(d.length) / 15;
+                                } else if (d.length === 24000) {
+                                    return Math.sqrt(d.length) / 24;
+                                } else if (d.length === 25000) {
+                                    return Math.sqrt(d.length) / 25;
+                                } else {
+                                    return Math.sqrt(d.length);
+                                }
+                            })
+                            .start();
+
+                    //add links to the visualization
+                    link = svg.selectAll('.link')
+                            .data(graph.links)
+                            .enter().append('line')
+                            .attr('class', 'link')
+                            .style("stroke-width", function (d) {
+                                return Math.sqrt(d.value);
+                            });
+                    //add nodes to the visualization
+                    node = svg.selectAll('.node')
+                            .data(graph.nodes)
+                            .enter().append('circle')
+                            .attr('class', 'node')
+                            .attr("r", function (d) {
+                                return Math.sqrt(d.size) / 7 || 4.5;
+                            })
+                            .style("fill", function (d) {
+                                return color(d.group);
+                            })
+                            .call(force.drag)
+                            .on('mouseover', tip.show) //Added
+                            .on('mouseout', tip.hide) //Added
+                            .on('click', connectedNodes);
+                    force.on("tick", function () {
+                        link.attr("x1", function (d) {
+                            return d.source.x;
+                        })
+                                .attr("y1", function (d) {
+                                    return d.source.y;
+                                })
+                                .attr("x2", function (d) {
+                                    return d.target.x;
+                                })
+                                .attr("y2", function (d) {
+                                    return d.target.y;
+                                });
+                        node.attr("cx", function (d) {
+                            return d.x;
+                        })
+                                .attr("cy", function (d) {
+                                    return d.y;
+                                });
+                    });
+
+                    //This part gives the possibility to fade all nodes that are not connected to the one that is clicked on
+                    //Toggle stores whether the highlighting is on
+                    toggle = 0;
+                    //Create an array logging what is connected to what
+                    linkedByIndex = {};
+                    for (i = 0; i < graph.nodes.length; i++) {
+                        linkedByIndex[i + "," + i] = 1;
+                    }
+                    ;
+                    graph.links.forEach(function (d) {
+                        linkedByIndex[d.source.index + "," + d.target.index] = 1;
+                    });
+                    //This function looks up whether a pair are neighbours
+                    function neighboring(a, b) {
+                        return linkedByIndex[a.index + "," + b.index];
+                    }
+
+                    //Reduce opacity of all but the neighbouring nodes
+                    function connectedNodes() {
+                        if (toggle === 0) {
+                            d = d3.select(this).node().__data__;
+                            node.style("opacity", function (o) {
+                                return neighboring(d, o) | neighboring(o, d) ? 1 : 0.1;
+                            });
+                            link.style("opacity", function (o) {
+                                return d.index === o.source.index | d.index === o.target.index ? 1 : 0.1;
+                            });
+                            //Reduce the op
+                            toggle = 1;
+                        } else {
+                            //Put them back to opacity=1
+                            node.style("opacity", 1);
+                            link.style("opacity", 1);
+                            toggle = 0;
+                        }
+                    }
+
+                });
             }
-            
-           system.out.print(chap);
-        
-            
+
+
         </script>
-
-        <!-- Label of the slider -->
-        <p>
-            <label for="amount">Chapter:</label>
-            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width: 25px; text-align: center;">
-        </p>
-        <div id="slider-horizontal" style="height:10px;"></div>
-        <p>
-
-        </p>
-
-
-        <!--Depending on the chosen value on the slider, another json file is used
-        or only one file which is filtered after the chapter No.??-->
-
 
     </body>
 </html>
