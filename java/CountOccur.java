@@ -2,7 +2,7 @@
 /**
  * zählt, wie oft die Personen in jedem Kapitel erwähnt wird wenn in der vis das
  * jeweilige kapitel ausgewählt wird, wird das programm von neuem starten
- * output:JSON file with data made by Anke Rüb
+ * output:JSON file with data made by Anke Rüb and An Khuong Bui
  */
 import java.io.PrintWriter;
 import java.util.*;
@@ -17,7 +17,7 @@ public class CountOccur {
     private List<String> targetIndexes;
     private ArrayList<String[]> nnps = new ArrayList<>();
     private Integer currentChapter;
-    
+
     public CountOccur(CheckChars nnpList, int currChap) {
         nnps = nnpList.getCheckedCharacters();
         currentChapter = currChap;
@@ -65,8 +65,8 @@ public class CountOccur {
         }
         return entities;
     }
-    
-        private List<Integer> getSentenceIds(String person) {
+
+    private List<Integer> getSentenceIds(String person) {
         List<Integer> sentenceIds = new ArrayList<>();
         for (String[] entity : nnps) {
             if (Integer.parseInt(entity[0]) == currentChapter) {
@@ -129,31 +129,44 @@ public class CountOccur {
 
                 //add the data into the array
                 listNodes.add(nodesData);
+
             }
         }
         root.put("nodes", listNodes);
 
         //LINKS
         HashMap<String, HashMap<String, Integer>> getEdges = getAllEdges();
-        for (Map.Entry<String, HashMap<String, Integer>> entry : getEdges.entrySet()) {
-            indexes = new ArrayList<>(getEdges.keySet()); // <== Parse
-            HashMap<String, Integer> valueofGetEdges = entry.getValue();
-            for (Map.Entry<String, Integer> sth : valueofGetEdges.entrySet()) { //going through smaller hashmap aka value of listHashMap
-                targetIndexes = new ArrayList<>(valueofGetEdges.keySet()); // <== Parse
-                if (entry.getValue() != null) {
-                    JSONObject linksData = new JSONObject(); // data of source,target,value,length
-                    linksData.put("source", indexes.indexOf(entry.getKey()));
-                    linksData.put("target", targetIndexes.indexOf(sth.getKey()));
-                    linksData.put("value", 1);
-                    linksData.put("length", (sth.getValue() * 1000));
-                    listLinks.add(linksData);
-                }
+        Iterator<Map.Entry<String, HashMap<String, Integer>>> it = getEdges.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, HashMap<String, Integer>> e = it.next();
+            String key = e.getKey();
+            HashMap<String, Integer> value = e.getValue();
+            if (value.isEmpty()) {
+                it.remove();
             }
         }
+        for (Map.Entry<String, HashMap<String, Integer>> psh : getEdges.entrySet()) {
+            indexes = new ArrayList<>(getEdges.keySet()); // <== Parse
+            HashMap<String, Integer> valueofGetEdges = psh.getValue();
+            for (Map.Entry<String, Integer> sth : valueofGetEdges.entrySet()) { //going through smaller hashmap aka value of listHashMap
+                targetIndexes = new ArrayList<>(valueofGetEdges.keySet()); // <== Parse
+                JSONObject linksData = new JSONObject(); // data of source,target,value,length
+                linksData.put("source", indexes.indexOf(psh.getKey()));
+                int bla = targetIndexes.indexOf(sth.getKey());
+                linksData.put("target", bla + 1);
+                linksData.put("value", 1);
+                linksData.put("length", (sth.getValue() * 1000));
+                listLinks.add(linksData);
+                System.out.println(indexes.indexOf(psh.getKey()) + psh.getKey()+" to "+(bla + 1)+sth.getKey());
+
+            }
+
+        }
+        System.out.println(getEdges);
         root.put("links", listLinks);
         //creates new json file and print solution into it
         try {
-            PrintWriter writer = new PrintWriter("web/countOcc.json", "UTF-8");
+            PrintWriter writer = new PrintWriter("countOcc.json", "UTF-8");
             writer.print(root);
             writer.close();
         } catch (Exception e) {
@@ -165,4 +178,3 @@ public class CountOccur {
         return entities;
     }
 }
-
