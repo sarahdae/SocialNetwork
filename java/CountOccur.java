@@ -54,12 +54,12 @@ public class CountOccur {
             }
 
             //print hashmap line by line, for each chapter
-            System.out.println("========== chapter " + currentChapter + "==========");
+            /**System.out.println("========== notes in current chapter: " + currentChapter + "==========");
             for (Map.Entry<String, Integer> entry : entities.entrySet()) {
                 if (entry.getValue() != 0) {
                     System.out.println(indexes.indexOf(entry.getKey()) + " " + entry.getKey() + " : " + entry.getValue());
                 }
-            }
+            }*/
         } catch (Exception e) {
             System.out.println("wrong file");
         }
@@ -79,37 +79,44 @@ public class CountOccur {
     }
 
     public HashMap<String, HashMap<String, Integer>> getAllEdges() {
-        HashMap<String, HashMap<String, Integer>> listOfOccurenceEdges = new HashMap<>();
+
+        HashMap<String, HashMap<String, Integer>> listOfOccurenceEdges = new HashMap<>();//big hashmap: key is a person and value is a hashmap
+        //of all persons cooccuring with the big key person, mapping to how often they cooccur with the big key person
 
         for (String[] ent : nnps) {
 
-            HashMap<String, Integer> cooccurrenceEdges = new HashMap<>();
-            List<Integer> sentenceIds = getSentenceIds(ent[2]);
+            if (Integer.parseInt(ent[0]) == currentChapter) {
+                HashMap<String, Integer> cooccurrenceEdges = new HashMap<>();
+                //inner hashmap
+                List<Integer> sentenceIds = getSentenceIds(ent[2]);
 
-            for (String[] entity : nnps) {
+                for (String[] entity : nnps) {
 
-                if (Integer.parseInt(entity[0]) == currentChapter) {
-                    //we add an edge/weight to the edge from the main person for every person occuring in the same or in adjacent sentences
-                    //as the main person. We create no edge from the main person to itself.
-                    if (sentenceIds.contains(Integer.parseInt(entity[1])) || sentenceIds.contains(Integer.parseInt(entity[1]) + 1)
-                            || (sentenceIds.contains(Integer.parseInt(entity[1]) - 1))) {
-                        String person = entity[2];
+                    if (Integer.parseInt(entity[0]) == currentChapter) {
+                        //we add an edge/weight to the edge from the main person for every person occurring in the same or in adjacent sentences
+                        //as the main person. We create no edge from the main person to itself.
+                        if (sentenceIds.contains(Integer.parseInt(entity[1])) || sentenceIds.contains(Integer.parseInt(entity[1]) + 1)
+                                || (sentenceIds.contains(Integer.parseInt(entity[1]) - 1))) {
+                            String person = entity[2];
 
-                        if (person.contentEquals(ent[2])) {
-                            continue;
-                        }
+                            if (person.contentEquals(ent[2])) {
+                                cooccurrenceEdges.put(entity[2], 0);
+                            }
 
-                        if (cooccurrenceEdges.containsKey(person)) {
-                            int count = cooccurrenceEdges.get(person);
-                            count += 1;
-                            cooccurrenceEdges.put(entity[2], count);
+                            if (cooccurrenceEdges.containsKey(person)) {
+                                int count = cooccurrenceEdges.get(person);
+                                count += 1;
+                                cooccurrenceEdges.put(entity[2], count);
+                            } else {
+                                cooccurrenceEdges.put(person, 1);
+                            }
                         } else {
-                            cooccurrenceEdges.put(person, 1);
+                            cooccurrenceEdges.put(entity[2], 0);
                         }
                     }
                 }
+                listOfOccurenceEdges.put(ent[2], cooccurrenceEdges);
             }
-            listOfOccurenceEdges.put(ent[2], cooccurrenceEdges);
         }
         return listOfOccurenceEdges;
     }
@@ -137,28 +144,35 @@ public class CountOccur {
         //LINKS
         HashMap<String, HashMap<String, Integer>> getEdges = getAllEdges();
         Iterator<Map.Entry<String, HashMap<String, Integer>>> it = getEdges.entrySet().iterator();
-        while (it.hasNext()) {
+        while (it.hasNext()) { //removes empty keys in getEdges
             Map.Entry<String, HashMap<String, Integer>> e = it.next();
             String key = e.getKey();
             HashMap<String, Integer> value = e.getValue();
             if (value.isEmpty()) {
-                it.remove();
+                if (!entities.containsKey(key)) { //leaves the empty keys which are in the nodes
+                    it.remove();
+                }
             }
         }
-        for (Map.Entry<String, HashMap<String, Integer>> psh : getEdges.entrySet()) {
+        for (Map.Entry<String, HashMap<String, Integer>> entry : getEdges.entrySet()) {
             indexes = new ArrayList<>(getEdges.keySet()); // <== Parse
-            HashMap<String, Integer> valueofGetEdges = psh.getValue();
+            HashMap<String, Integer> valueofGetEdges = entry.getValue();
             for (Map.Entry<String, Integer> sth : valueofGetEdges.entrySet()) { //going through smaller hashmap aka value of listHashMap
                 targetIndexes = new ArrayList<>(valueofGetEdges.keySet()); // <== Parse
                 JSONObject linksData = new JSONObject(); // data of source,target,value,length
-                linksData.put("source", indexes.indexOf(psh.getKey()));
-                int bla = targetIndexes.indexOf(sth.getKey());
-                linksData.put("target", bla + 1);
-                linksData.put("value", 1);
-                linksData.put("length", (sth.getValue() * 1000));
-                listLinks.add(linksData);
-                System.out.println(indexes.indexOf(psh.getKey()) + psh.getKey()+" to "+(bla + 1)+sth.getKey());
+                if ((sth.getValue() * 1000) != 0) {
+                    if (!entry.getKey().equals(sth.getKey())) {
+                        linksData.put("source", indexes.indexOf(entry.getKey()));
+                        int targetValue = targetIndexes.indexOf(sth.getKey());
+                        linksData.put("target", targetValue);
+                        linksData.put("value", 1);
+                        linksData.put("length", (sth.getValue() * 1000));
+                        listLinks.add(linksData);
 
+                        //for me to control before creating a json file
+                        System.out.println(indexes.indexOf(entry.getKey()) + entry.getKey() + " to " + targetValue + sth.getKey() + " length: " + (sth.getValue() * 1000));
+                    }
+                }
             }
 
         }
@@ -166,7 +180,7 @@ public class CountOccur {
         root.put("links", listLinks);
         //creates new json file and print solution into it
         try {
-            PrintWriter writer = new PrintWriter("web\countOcc.json", "UTF-8");
+            PrintWriter writer = new PrintWriter("countOcc.json", "UTF-8");
             writer.print(root);
             writer.close();
         } catch (Exception e) {
@@ -174,7 +188,8 @@ public class CountOccur {
         }
     }
 
-    public HashMap getOccur() {
+
+public HashMap getOccur() {
         return entities;
     }
 }
