@@ -11,8 +11,8 @@ public class Main {
         //hashmap in der jeder character einer anzahl zugemappt ist, wie oft er mit der (im Hintergrund ermittelten)
         //"Hauptperson" im selben Satz vorkommt.
         //Die Hauptperson ist die am häufigsten genannte.
-        HashMap<String, Integer> occurrenceEdges = countOccur.getCooccurrenceEdges();
-        System.out.println(occurrenceEdges);
+        HashMap<String, HashMap<String, Integer>> occurrenceEdges = countOccur.getAllEdges();
+
     }
 
 
