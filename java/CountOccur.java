@@ -47,19 +47,19 @@ public class CountOccur {
                             oldCount = 0;
                         }
                         //add lemma and number of occurences into hashmap
-                        entities.put(lemma, oldCount + 1);
+                        entities.put(lemma.substring(0, 1).toUpperCase() + lemma.substring(1).toLowerCase(), oldCount + 1);
                         indexes = new ArrayList<>(entities.keySet()); // <== Parse
                     }
                 }
             }
 
             //print hashmap line by line, for each chapter
-            /**System.out.println("========== notes in current chapter: " + currentChapter + "==========");
+            System.out.println("========== nodes in current chapter: " + currentChapter + "==========");
             for (Map.Entry<String, Integer> entry : entities.entrySet()) {
                 if (entry.getValue() != 0) {
                     System.out.println(indexes.indexOf(entry.getKey()) + " " + entry.getKey() + " : " + entry.getValue());
                 }
-            }*/
+            }
         } catch (Exception e) {
             System.out.println("wrong file");
         }
@@ -90,7 +90,7 @@ public class CountOccur {
                 //inner hashmap
                 List<Integer> sentenceIds = getSentenceIds(ent[2]);
 
-                for (String[] entity : nnps) {
+                for (String[] entity : nnps) { //going through tagged text 2nd time
 
                     if (Integer.parseInt(entity[0]) == currentChapter) {
                         //we add an edge/weight to the edge from the main person for every person occurring in the same or in adjacent sentences
@@ -100,22 +100,22 @@ public class CountOccur {
                             String person = entity[2];
 
                             if (person.contentEquals(ent[2])) {
-                                cooccurrenceEdges.put(entity[2], 0);
+                                cooccurrenceEdges.put(entity[2].substring(0, 1).toUpperCase() + entity[2].substring(1).toLowerCase(), 0);
                             }
 
                             if (cooccurrenceEdges.containsKey(person)) {
                                 int count = cooccurrenceEdges.get(person);
                                 count += 1;
-                                cooccurrenceEdges.put(entity[2], count);
+                                cooccurrenceEdges.put(entity[2].substring(0, 1).toUpperCase() + entity[2].substring(1).toLowerCase(), count);
                             } else {
-                                cooccurrenceEdges.put(person, 1);
+                                cooccurrenceEdges.put(person.substring(0, 1).toUpperCase() + person.substring(1).toLowerCase(), 1);
                             }
                         } else {
-                            cooccurrenceEdges.put(entity[2], 0);
+                            cooccurrenceEdges.put(entity[2].substring(0, 1).toUpperCase() + entity[2].substring(1).toLowerCase(), 0);
                         }
                     }
                 }
-                listOfOccurenceEdges.put(ent[2], cooccurrenceEdges);
+                listOfOccurenceEdges.put(ent[2].substring(0, 1).toUpperCase() + ent[2].substring(1).toLowerCase(), cooccurrenceEdges);
             }
         }
         return listOfOccurenceEdges;
@@ -184,7 +184,7 @@ public class CountOccur {
             writer.print(root);
             writer.close();
         } catch (Exception e) {
-            System.out.println("could not output file");
+            System.out.println("could not output file. Path is incorrect");
         }
     }
 
